@@ -29,12 +29,12 @@ function showPage(list, page) {
 
          let studentItem = `<li class="student-item cf">
     <div class="student-details">
-      <img class="avatar" src="https://randomuser.me/api/portraits/women/25.jpg" alt="Profile Picture">
-      <h3>Ethel Dean</h3>
-      <span class="email">ethel.dean@example.com</span>
+      <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">
+      <h3> ${list[i].name.first} ${list[i].name.last}</h3>
+      <span class="email">${list[i].email}</span>
     </div>
     <div class="joined-details">
-      <span class="date">Joined 12-15-2005</span>
+      <span class="date">Joined ${list[i].registered.date}</span>
     </div>
   </li>`;
 
