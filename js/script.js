@@ -47,7 +47,6 @@ function showPage(list, page) {
 showPage(data, 1);
 
 
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
@@ -94,5 +93,48 @@ function addPagination(list) {
 //calling the function
 addPagination(data);
 
+
+
+// Dynamically creating a search component
+
+
+const header = document.querySelector('.header');
+const searchHTML = `<label for="search" class="student-search">
+<span>Search by name</span>
+<input id="search" placeholder="Search by name...">
+<button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>`;
+header.insertAdjacentHTML('beforeend', searchHTML);
+
+
+// Add Functionality to the Search Component
+
+//global search variables
+const studentSearchArea = document.querySelector('.student-search');
+const searchBar = studentSearchArea.querySelector('#search');
+const searchButton = studentSearchArea.getElementsByTagName('button');
+const studentItems = document.querySelectorAll('.student-item');
+
+
+searchBar.addEventListener('keyup', (e) => {
+
+   const searchTerm = e.target.value.toLowerCase();
+   studentItems.forEach(studentItem => {
+
+
+      const nameTags = studentItem.getElementsByTagName('h3');
+      const name = nameTags[0].textContent.toLowerCase();
+   
+
+      if (name.includes(searchTerm)) {
+         studentItem.style.display = "block";
+      }
+      else {
+         studentItem.style.display = "none";
+      }
+
+   });
+
+})
 
 
