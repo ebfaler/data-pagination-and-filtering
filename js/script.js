@@ -39,7 +39,7 @@ function showPage(list, page) {
   </li>`;
 
          studentList.insertAdjacentHTML('beforeend', studentItem);
-      }
+      }   
    }
 
 };
@@ -97,7 +97,6 @@ addPagination(data);
 
 // Dynamically creating a search component
 
-
 const header = document.querySelector('.header');
 const searchHTML = `<label for="search" class="student-search">
 <span>Search by name</span>
@@ -115,26 +114,46 @@ const searchBar = studentSearchArea.querySelector('#search');
 const searchButton = studentSearchArea.getElementsByTagName('button');
 const studentItems = document.querySelectorAll('.student-item');
 
-
-searchBar.addEventListener('keyup', (e) => {
-
-   const searchTerm = e.target.value.toLowerCase();
-   studentItems.forEach(studentItem => {
-
-
-      const nameTags = studentItem.getElementsByTagName('h3');
-      const name = nameTags[0].textContent.toLowerCase();
+function search(searchTerm){
+   // studentItems.forEach(studentItem => {
+   //    const nameTags = studentItem.getElementsByTagName('h3');
+   //    const name = nameTags[0].textContent.toLowerCase();
    
 
-      if (name.includes(searchTerm)) {
-         studentItem.style.display = "block";
-      }
-      else {
-         studentItem.style.display = "none";
-      }
+   //    if (name.includes(searchTerm)) {
+   //       studentItem.style.display = "block";
+   //      
+   //    }
+   //    else {
+   //       studentItem.style.display = "none";
+   //    }
+  
+   // });
+
+   const filteredPeople = data.filter((person) => {
+      const name = `${person.name.first} ${person.name.last}`.toLowerCase();
+      console.log(name);
+      return name.includes(searchTerm);
 
    });
+   showPage(filteredPeople, 1);
+   addPagination(filteredPeople);
+   // remove code above
+   // filter the `data` similarly to above into a new variable
+   // call showPage(filteredData)
+   // call addPagination(filteredData)
 
-})
+}
+
+//adding an event listener to searchBar
+searchBar.addEventListener('keyup', (e) => {
+   const searchTerm = e.target.value.toLowerCase();
+   search(searchTerm);
+});
 
 
+//making searchButton clickable
+searchButton[0].addEventListener('click', (e) => {
+   const searchTerm = searchBar.value.toLowerCase();
+   search(searchTerm);
+});
