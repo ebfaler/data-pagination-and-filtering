@@ -83,6 +83,7 @@ function addPagination(list) {
          }
          // adding active class to button clicked and passing textContent to load the new page
          e.target.className = "active";
+         //textContent gets the button number
          let newPage = e.target.textContent;
          showPage(list, newPage);
       }
