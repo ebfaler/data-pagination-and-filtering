@@ -3,16 +3,10 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering 
 */
 
-
-
-
-
-// Global
-const itemsPerPage = 9;
-
 /*
-`showPage` function creates and inserts/append sthe elements needed to display a "page" of nine students
+`showPage` function creates and inserts/append the elements needed to display a "page" of nine students
 */
+const itemsPerPage = 9;
 function showPage(list, page) {
 
    // list and page parameters represent student data that will be passed as an argument when the function is called.
@@ -48,14 +42,12 @@ showPage(data, 1);
 
 
 /*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+`addPagination` function will create and insert/append the elements needed for the pagination buttons
 */
 
 function addPagination(list) {
 
    let paginationButtons = Math.ceil((list.length) / itemsPerPage);
-   // console.log(paginationButtons);
    let linkList = document.querySelector('.link-list');
    linkList.innerHTML = "";
 
@@ -70,10 +62,16 @@ function addPagination(list) {
 
 
    const buttons = linkList.getElementsByTagName("button");
-   buttons[0].className = "active";
+   if(buttons.length > 0 ){
+      buttons[0].className = "active";
+   }
+   else {
+      const studentList = document.querySelector('.student-list');
+      studentList.innerHTML =  
+      `<h3>No Results Found</h3>`;
+   }
 
    /* click event listener for linkList*/
-
    linkList.addEventListener('click', (e) => {
 
       if (e.target.tagName === "BUTTON") {
@@ -95,7 +93,9 @@ addPagination(data);
 
 
 
-// Dynamically creating a search component
+/* 
+Adding search functionality
+*/
 
 const header = document.querySelector('.header');
 const searchHTML = `<label for="search" class="student-search">
@@ -106,43 +106,24 @@ const searchHTML = `<label for="search" class="student-search">
 header.insertAdjacentHTML('beforeend', searchHTML);
 
 
-// Add Functionality to the Search Component
-
 //global search variables
+
 const studentSearchArea = document.querySelector('.student-search');
 const searchBar = studentSearchArea.querySelector('#search');
 const searchButton = studentSearchArea.getElementsByTagName('button');
 const studentItems = document.querySelectorAll('.student-item');
 
-function search(searchTerm){
-   // studentItems.forEach(studentItem => {
-   //    const nameTags = studentItem.getElementsByTagName('h3');
-   //    const name = nameTags[0].textContent.toLowerCase();
-   
+//function to filter by first and last names
 
-   //    if (name.includes(searchTerm)) {
-   //       studentItem.style.display = "block";
-   //      
-   //    }
-   //    else {
-   //       studentItem.style.display = "none";
-   //    }
-  
-   // });
+function search(searchTerm){
 
    const filteredPeople = data.filter((person) => {
       const name = `${person.name.first} ${person.name.last}`.toLowerCase();
-      console.log(name);
       return name.includes(searchTerm);
 
    });
    showPage(filteredPeople, 1);
    addPagination(filteredPeople);
-   // remove code above
-   // filter the `data` similarly to above into a new variable
-   // call showPage(filteredData)
-   // call addPagination(filteredData)
-
 }
 
 //adding an event listener to searchBar
